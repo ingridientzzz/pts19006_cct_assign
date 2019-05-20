@@ -404,8 +404,8 @@ class Interface(Calculations):
         self.label_bmi = Label(self.bmi_frame)
         self.label_bmi.grid(row=0, column=0, columnspan=5, padx=10, pady=10, sticky=W)
         # Error messages to user
-        self.label_display = Label(self.bmi_frame)
-        self.label_display.grid(row=1, column=0, columnspan=5, padx=10, pady=10, sticky=W)
+        self.label_display = Label(self.bmi_frame, bg='#ffda8f', width=60)
+        self.label_display.grid(row=1, column=0, columnspan=9, padx=10, pady=10, sticky=W)
         # === ENTRY BOXES === #
         # name box
         self.text_name = StringVar()
