@@ -647,7 +647,7 @@ class Interface(Calculations):
         try:
             self.write_file()
         except FileNotFoundError:
-            self.label_display.configure(text='Please input a file name to save as')
+            self.label_display.configure(text='Please input a file name.')
         else:
             csv_name = self.get_csv_name()
             root.title(f'BMI Calculator - {csv_name}')
