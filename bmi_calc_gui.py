@@ -43,33 +43,33 @@ class Calculations:
             self.entry_pounds.delete(0, END)
             self.entry_kilograms.delete(0, END)
             self.label_display.configure(text="")
-            return
-        if stones_weight <= 0:
-            self.label_weight.configure(text="Oops! Value must be > 0...")
-            self.clear_weight()
-            self.label_display.configure(text="")
         else:
-            # stones
-            self.entry_stones.delete(0, END)
-            self.entry_stones.insert(0, '%.2f' % (stones_weight))
-            self.entry_stones.configure(state=DISABLED)
-            self.button_stones.configure(state=DISABLED)
-            # pounds
-            self.entry_pounds.delete(0, END)
-            self.entry_pounds.insert(0, '%.2f' % (self.stones_to_pounds(stones_weight)))
-            self.entry_pounds.configure(state=DISABLED)
-            self.button_pounds.configure(state=DISABLED)
-            # kilograms
-            self.entry_kilograms.delete(0, END)
-            self.entry_kilograms.insert(0, '%.2f' % (self.pounds_to_kilograms(self.stones_to_pounds(stones_weight))))
-            self.entry_kilograms.configure(state=DISABLED)
-            self.button_kilograms.configure(state=DISABLED)
-            self.button_clear_weight.configure(state=NORMAL)
-            self.label_weight.configure(text="Weight locked. Click 'Reset' to change or 'Calculate BMI' or 'Calculate BMI'.")
-            self.label_display.configure(text="")
-            # update self.weight_dict
-            self.update_weight_dict()
-            return
+            stones_weight = float(user_input)
+            if stones_weight <= 0:
+                self.label_weight.configure(text="Oops! Value must be > 0...")
+                self.clear_weight()
+                self.label_display.configure(text="")
+            else:
+                # stones
+                self.entry_stones.delete(0, END)
+                self.entry_stones.insert(0, '%.2f' % (stones_weight))
+                self.entry_stones.configure(state=DISABLED)
+                self.button_stones.configure(state=DISABLED)
+                # pounds
+                self.entry_pounds.delete(0, END)
+                self.entry_pounds.insert(0, '%.2f' % (self.stones_to_pounds(stones_weight)))
+                self.entry_pounds.configure(state=DISABLED)
+                self.button_pounds.configure(state=DISABLED)
+                # kilograms
+                self.entry_kilograms.delete(0, END)
+                self.entry_kilograms.insert(0, '%.2f' % (self.pounds_to_kilograms(self.stones_to_pounds(stones_weight))))
+                self.entry_kilograms.configure(state=DISABLED)
+                self.button_kilograms.configure(state=DISABLED)
+                self.button_clear_weight.configure(state=NORMAL)
+                self.label_weight.configure(text="Weight locked. Click 'Reset' to change or 'Calculate BMI' or 'Calculate BMI'.")
+                self.label_display.configure(text="")
+                # update self.weight_dict
+                self.update_weight_dict()
 
     def pounds_convert(self):  # 2
         '''Checks input in corresponding lbs entry field. If string, blank, or <=0, fields are reset.
@@ -87,32 +87,34 @@ class Calculations:
             self.entry_pounds.delete(0, END)
             self.label_display.configure(text="")
             return
-        if pounds_weight <= 0:
-            self.label_weight.configure(text="Oops! Value must be > 0...")
-            self.clear_weight()
-            self.label_display.configure(text="")
         else:
-            # pounds
-            self.entry_pounds.delete(0, END)
-            self.entry_pounds.insert(0, '%.2f' % (pounds_weight))
-            self.entry_pounds.configure(state=DISABLED)
-            self.button_pounds.configure(state=DISABLED)
-            # stones
-            self.entry_stones.delete(0, END)
-            self.entry_stones.insert(0, '%.2f' % (self.pounds_to_stones(pounds_weight)))
-            self.entry_stones.configure(state=DISABLED)
-            self.button_stones.configure(state=DISABLED)
-            # kg
-            self.entry_kilograms.delete(0, END)
-            self.entry_kilograms.insert(0, '%.2f' % (self.pounds_to_kilograms(pounds_weight)))
-            self.entry_kilograms.configure(state=DISABLED)
-            self.button_kilograms.configure(state=DISABLED)
-            self.button_clear_weight.configure(state=NORMAL)
-            self.label_weight.configure(text="Weight locked. Click 'Reset' to change or click 'Calculate BMI'.")
-            self.label_display.configure(text="")
-            # update self.weight_dict
-            self.update_weight_dict()
-            return
+            pounds_weight = float(user_input)
+            if pounds_weight <= 0:
+                self.label_weight.configure(text="")
+                self.label_weight.configure(text="Oops! Value must be > 0...")
+                self.clear_weight()
+                self.label_display.configure(text="")
+            else:
+                # pounds
+                self.entry_pounds.delete(0, END)
+                self.entry_pounds.insert(0, '%.2f' % (pounds_weight))
+                self.entry_pounds.configure(state=DISABLED)
+                self.button_pounds.configure(state=DISABLED)
+                # stones
+                self.entry_stones.delete(0, END)
+                self.entry_stones.insert(0, '%.2f' % (self.pounds_to_stones(pounds_weight)))
+                self.entry_stones.configure(state=DISABLED)
+                self.button_stones.configure(state=DISABLED)
+                # kg
+                self.entry_kilograms.delete(0, END)
+                self.entry_kilograms.insert(0, '%.2f' % (self.pounds_to_kilograms(pounds_weight)))
+                self.entry_kilograms.configure(state=DISABLED)
+                self.button_kilograms.configure(state=DISABLED)
+                self.button_clear_weight.configure(state=NORMAL)
+                self.label_weight.configure(text="Weight locked. Click 'Reset' to change or click 'Calculate BMI'.")
+                self.label_display.configure(text="")
+                # update self.weight_dict
+                self.update_weight_dict()
 
     def kilograms_convert(self):  # 3
         '''Checks input in corresponding kg entry field. If string, blank, or <=0, fields are reset.
@@ -172,33 +174,34 @@ class Calculations:
             self.entry_inches.delete(0, END)
             self.entry_cm.delete(0, END)
             self.label_display.configure(text="")
-            return
-        if feet_height <= 0:
-            self.label_height.configure(text="Oops! Value must be > 0...")
-            self.clear_height()
-            self.label_display.configure(text="")
         else:
-            # Ft
-            self.entry_feet.delete(0, END)
-            self.entry_feet.insert(0, '%.2f' % (feet_height))
-            self.entry_feet.configure(state=DISABLED)
-            self.button_feet.configure(state=DISABLED)
-            # inch
-            self.entry_inches.delete(0, END)
-            self.entry_inches.insert(0, '%.2f' % (self.feet_to_inches(feet_height)))
-            self.entry_inches.configure(state=DISABLED)
-            self.button_inches.configure(state=DISABLED)
-            # cm
-            self.entry_cm.delete(0, END)
-            self.entry_cm.insert(0, '%.2f' % (self.inches_to_cm(self.feet_to_inches(feet_height))))
-            self.entry_cm.configure(state=DISABLED)
-            self.button_cm.configure(state=DISABLED)
-            self.button_clear_height.configure(state=NORMAL)
-            self.label_height.configure(text="Height locked. Click 'Reset' to change or click 'Calculate BMI'.")
-            self.label_display.configure(text="")
-            # update height_dict
-            self.update_height_dict()
-            return
+            feet_height = float(user_input)
+            if feet_height <= 0:
+                self.label_height.configure(text="Oops! Value must be > 0...")
+                self.clear_height()
+                self.label_display.configure(text="")
+            else:
+                # Ft
+                self.entry_feet.delete(0, END)
+                self.entry_feet.insert(0, '%.2f' % (feet_height))
+                self.entry_feet.configure(state=DISABLED)
+                self.button_feet.configure(state=DISABLED)
+                # inch
+                self.entry_inches.delete(0, END)
+                self.entry_inches.insert(0, '%.2f' % (self.feet_to_inches(feet_height)))
+                self.entry_inches.configure(state=DISABLED)
+                self.button_inches.configure(state=DISABLED)
+                # cm
+                self.entry_cm.delete(0, END)
+                self.entry_cm.insert(0, '%.2f' % (self.inches_to_cm(self.feet_to_inches(feet_height))))
+                self.entry_cm.configure(state=DISABLED)
+                self.button_cm.configure(state=DISABLED)
+                self.button_clear_height.configure(state=NORMAL)
+                self.label_height.configure(text="Height locked. Click 'Reset' to change or click 'Calculate BMI'.")
+                self.label_display.configure(text="")
+                # update height_dict
+                self.update_height_dict()
+                return
 
     def inches_convert(self):  # 5
         '''Checks input in corresponding inches entry field. If string, blank, or <=0, fields are reset.
@@ -215,33 +218,33 @@ class Calculations:
             self.entry_inches.delete(0, END)
             self.entry_cm.delete(0, END)
             self.label_display.configure(text="")
-            return
-        if inches_height <= 0:
-            self.label_height.configure(text="Oops! Value must be > 0...")
-            self.clear_height()
-            self.label_display.configure(text="")
         else:
-            # inch
-            self.entry_inches.delete(0, END)
-            self.entry_inches.insert(0, '%.2f' % (inches_height))
-            self.entry_inches.configure(state=DISABLED)
-            self.button_inches.configure(state=DISABLED)
-            # Ft
-            self.entry_feet.delete(0, END)
-            self.entry_feet.insert(0, '%.2f' % (self.inches_to_feet(inches_height)))
-            self.entry_feet.configure(state=DISABLED)
-            self.button_feet.configure(state=DISABLED)
-            # cm
-            self.entry_cm.delete(0, END)
-            self.entry_cm.insert(0, '%.2f' % (self.inches_to_cm(inches_height)))
-            self.entry_cm.configure(state=DISABLED)
-            self.button_cm.configure(state=DISABLED)
-            self.button_clear_height.configure(state=NORMAL)
-            self.label_height.configure(text="Height locked. Click 'Reset' to change or click 'Calculate BMI'.")
-            self.label_display.configure(text="")
-            # update height_dict
-            self.update_height_dict()
-            return
+            inches_height = float(user_input)
+            if inches_height <= 0:
+                self.label_height.configure(text="Oops! Value must be > 0...")
+                self.clear_height()
+                self.label_display.configure(text="")
+            else:
+                # inch
+                self.entry_inches.delete(0, END)
+                self.entry_inches.insert(0, '%.2f' % (inches_height))
+                self.entry_inches.configure(state=DISABLED)
+                self.button_inches.configure(state=DISABLED)
+                # Ft
+                self.entry_feet.delete(0, END)
+                self.entry_feet.insert(0, '%.2f' % (self.inches_to_feet(inches_height)))
+                self.entry_feet.configure(state=DISABLED)
+                self.button_feet.configure(state=DISABLED)
+                # cm
+                self.entry_cm.delete(0, END)
+                self.entry_cm.insert(0, '%.2f' % (self.inches_to_cm(inches_height)))
+                self.entry_cm.configure(state=DISABLED)
+                self.button_cm.configure(state=DISABLED)
+                self.button_clear_height.configure(state=NORMAL)
+                self.label_height.configure(text="Height locked. Click 'Reset' to change or click 'Calculate BMI'.")
+                self.label_display.configure(text="")
+                # update height_dict
+                self.update_height_dict()
 
     def cm_convert(self):  # 6
         '''Checks input in corresponding cm entry field. If string, blank, or <=0, fields are reset.
@@ -258,33 +261,33 @@ class Calculations:
             self.entry_inches.delete(0, END)
             self.entry_cm.delete(0, END)
             self.label_display.configure(text="")
-            return
-        if cm_height <= 0:
-            self.label_height.configure(text="Oops! Value must be > 0...")
-            self.clear_height()
-            self.label_display.configure(text="")
         else:
-            # cm
-            self.entry_cm.delete(0, END)
-            self.entry_cm.insert(0, '%.2f' % (cm_height))
-            self.entry_cm.configure(state=DISABLED)
-            self.button_cm.configure(state=DISABLED)
-            # ft
-            self.entry_feet.delete(0, END)
-            self.entry_feet.insert(0, '%.2f' % (self.inches_to_feet(self.cm_to_inches(cm_height))))
-            self.entry_feet.configure(state=DISABLED)
-            self.button_feet.configure(state=DISABLED)
-            # inch
-            self.entry_inches.delete(0, END)
-            self.entry_inches.insert(0, '%.2f' % (self.cm_to_inches(cm_height)))
-            self.entry_inches.configure(state=DISABLED)
-            self.button_inches.configure(state=DISABLED)
-            self.button_clear_height.configure(state=NORMAL)
-            self.label_height.configure(text="Height locked. Click 'Reset' to change or click 'Calculate BMI'.")
-            self.label_display.configure(text="")
-            # update height_dict
-            self.update_height_dict()
-            return
+            cm_height = float(user_input)
+            if cm_height <= 0:
+                self.label_height.configure(text="Oops! Value must be > 0...")
+                self.clear_height()
+                self.label_display.configure(text="")
+            else:
+                # cm
+                self.entry_cm.delete(0, END)
+                self.entry_cm.insert(0, '%.2f' % (cm_height))
+                self.entry_cm.configure(state=DISABLED)
+                self.button_cm.configure(state=DISABLED)
+                # ft
+                self.entry_feet.delete(0, END)
+                self.entry_feet.insert(0, '%.2f' % (self.inches_to_feet(self.cm_to_inches(cm_height))))
+                self.entry_feet.configure(state=DISABLED)
+                self.button_feet.configure(state=DISABLED)
+                # inch
+                self.entry_inches.delete(0, END)
+                self.entry_inches.insert(0, '%.2f' % (self.cm_to_inches(cm_height)))
+                self.entry_inches.configure(state=DISABLED)
+                self.button_inches.configure(state=DISABLED)
+                self.button_clear_height.configure(state=NORMAL)
+                self.label_height.configure(text="Height locked. Click 'Reset' to change or click 'Calculate BMI'.")
+                self.label_display.configure(text="")
+                # update height_dict
+                self.update_height_dict()
 
     def calculate_bmi(self):
         '''Gets value from metric kg & cm. def run_bmi has cleared and
@@ -401,10 +404,10 @@ class Interface(Calculations):
         self.label_cm = Label(self.height_frame, text='Centimeters:')
         self.label_cm.grid(row=0, column=4, padx=5, pady=5, sticky=E)
         # BMI analysis display
-        self.label_bmi = Label(self.bmi_frame)
-        self.label_bmi.grid(row=0, column=0, columnspan=5, padx=10, pady=10, sticky=W)
+        self.label_bmi = Label(self.bmi_frame, width=60, bg='#99e6e6' ,wraplength=450, justify=LEFT)
+        self.label_bmi.grid(row=0, column=0, columnspan=9, padx=10, pady=10, sticky=W)
         # Error messages to user
-        self.label_display = Label(self.bmi_frame, bg='#ffda8f', width=60, wraplength=10)
+        self.label_display = Label(self.bmi_frame, bg='#ffda8f', width=60, wraplength=450, justify=LEFT)
         self.label_display.grid(row=1, column=0, columnspan=9, padx=10, pady=10, sticky=W)
         # === ENTRY BOXES === #
         # name box
@@ -474,8 +477,8 @@ class Interface(Calculations):
         self.button_calc_bmi = ttk.Button(self.bmi_frame, text='Calculate BMI', command=self.run_bmi)
         self.button_calc_bmi.grid(row=2, column=0, columnspan=1, padx=5, pady=10, sticky=W + E + N + S)
         # clear data
-        self.button_clear = ttk.Button(self.bmi_frame, text='Restart', command=self.reset)
-        self.button_clear.grid(row=2, column=2, columnspan=1, padx=5, pady=10, sticky=W + E + N + S)
+        self.button_restart = ttk.Button(self.bmi_frame, text='Restart', command=self.reset)
+        self.button_restart.grid(row=2, column=2, columnspan=1, padx=5, pady=10, sticky=W + E + N + S)
         # IO buttons - save
         self.button_save = ttk.Button(self.bmi_frame, text='Save', state=DISABLED, command=self.save)
         self.button_save.grid(row=2, column=4, columnspan=1, padx=5, pady=10, sticky=W + E + N + S)
@@ -524,7 +527,7 @@ class Interface(Calculations):
         # lbs
         self.button_inches.configure(state=NORMAL)
         self.entry_inches.configure(state=NORMAL)
-        self.entry_cm.delete(0, END)
+        self.entry_inches.delete(0, END)
         # kg
         self.button_cm.configure(state=NORMAL)
         self.entry_cm.configure(state=NORMAL)
@@ -547,6 +550,7 @@ class Interface(Calculations):
         # clear BMI frame
         self.clear_bmi_display()
         # clear name and label
+        self.entry_name.configure(state=NORMAL)
         self.entry_name.delete(0, END)
         # disable save buttons
         self.button_save.configure(state=DISABLED)
@@ -577,17 +581,6 @@ class Interface(Calculations):
         ]
         w_f_fields = w_fields + h_fields
         n_w_f_fields = w_f_fields + name
-        # get status of buttons
-        weight_btns = [
-            str(self.button_stones['state']),
-            str(self.button_pounds['state']),
-            str(self.button_kilograms['state']),
-        ]
-        height_btns = [
-            str(self.button_feet['state']),
-            str(self.button_inches['state']),
-            str(self.button_cm['state']),
-        ]
         # all/most combinations of field entry being forgotten
         if not any(n_w_f_fields):
             self.label_display.configure(text="Oops! You didn't input anything.")
@@ -655,10 +648,13 @@ class Interface(Calculations):
 
     def save(self):
         '''Becomes clickable only when BMI is successfully calculated'''
+        print(self.file_name)
+        self.label_display.configure(text='')
         if not self.file_name:
             self.save_as()
         else:
             self.write_file()
+            self.label_display.configure(text=f'Re-saved file {self.file_name}')
 
     def write_file(self):
         '''Convert self.bmi_data into csv'''
