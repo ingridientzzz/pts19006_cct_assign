@@ -86,7 +86,6 @@ class Calculations:
             self.entry_kilograms.delete(0, END)
             self.entry_pounds.delete(0, END)
             self.label_display.configure(text="")
-            return
         else:
             pounds_weight = float(user_input)
             if pounds_weight <= 0:
@@ -131,7 +130,6 @@ class Calculations:
             self.entry_pounds.delete(0, END)
             self.entry_kilograms.delete(0, END)
             self.label_display.configure(text="")
-            return
         if kilograms_weight <= 0:
             self.label_weight.configure(text="Oops! Value must be > 0...")
             self.clear_weight()
@@ -157,7 +155,6 @@ class Calculations:
             self.label_display.configure(text="")
             # update self.weight_dict
             self.update_weight_dict()
-            return
 
     def feet_convert(self):  # 4
         '''Checks input in corresponding feet entry field. If string, blank, or <=0, fields are reset.
@@ -201,7 +198,6 @@ class Calculations:
                 self.label_display.configure(text="")
                 # update height_dict
                 self.update_height_dict()
-                return
 
     def inches_convert(self):  # 5
         '''Checks input in corresponding inches entry field. If string, blank, or <=0, fields are reset.
