@@ -12,7 +12,6 @@ import csv
 class Calculations:
     '''Class holding conversion formulae and field value input handling.
     '''
-
     def update_weight_dict(self):
         '''Fills out self.weight_dict'''
         self.weight_dict = {
@@ -29,27 +28,29 @@ class Calculations:
         }
 
     def stones_convert(self):  # 1
-        '''Checks input in corresponding stones entry field. If string, blank, or <=0, fields are reset.
-        If values are correct, conversion is executed.
-        If successfull, entry fields buttons are set to state = 'disabled'.
-        Reset button set to = 'normal'
+        '''Checks input in corresponding stones entry field. 
+        If unable to convert to float i.e. Str, blank, or value <= 0, fields are reset.
+        If values are correct, conversion is executed & all 3 weight values are obtained.
+        Entry fields buttons are set to state = 'disabled'.
+        Reset button set to = 'normal' and self.weight_dict is updated.
         '''
         user_input = self.entry_stones.get()
         try:
             stones_weight = float(user_input)
-        except (ValueError, TypeError):
-            self.label_weight.configure(text="Non-zero numbers only and/or click matching Convert button.")
-            self.entry_stones.delete(0, END)
-            self.entry_pounds.delete(0, END)
-            self.entry_kilograms.delete(0, END)
+        except ValueError:
+            self.clear_weight()
+            self.label_weight.configure(
+                text="Non-zero numbers only and/or click matching Convert button.")
             self.label_display.configure(text="")
         else:
             stones_weight = float(user_input)
-            if stones_weight <= 0:
-                self.label_weight.configure(text="Oops! Value must be > 0...")
+            if stones_weight == 0.00 or stones_weight < 0.00:
+                # print('Entry is <= 0.00')
                 self.clear_weight()
+                self.label_weight.configure(
+                    text="Entry must be > 0. Re-input value and convert again.")
                 self.label_display.configure(text="")
-            else:
+            else:   # stones_weight must be < 0.00
                 # stones
                 self.entry_stones.delete(0, END)
                 self.entry_stones.insert(0, '%.2f' % (stones_weight))
@@ -62,38 +63,43 @@ class Calculations:
                 self.button_pounds.configure(state=DISABLED)
                 # kilograms
                 self.entry_kilograms.delete(0, END)
-                self.entry_kilograms.insert(0, '%.2f' % (self.pounds_to_kilograms(self.stones_to_pounds(stones_weight))))
+                self.entry_kilograms.insert(
+                    0, '%.2f' % (self.pounds_to_kilograms(self.stones_to_pounds(stones_weight)))
+                )
                 self.entry_kilograms.configure(state=DISABLED)
                 self.button_kilograms.configure(state=DISABLED)
                 self.button_clear_weight.configure(state=NORMAL)
-                self.label_weight.configure(text="Weight locked. Click 'Reset' to change or 'Calculate BMI' or 'Calculate BMI'.")
+                self.label_weight.configure(
+                    text='''Weight locked. Click 'Reset' to change values. Or ensure that height is converted then click 'Calculate BMI'.'''
+                )
                 self.label_display.configure(text="")
                 # update self.weight_dict
                 self.update_weight_dict()
 
     def pounds_convert(self):  # 2
-        '''Checks input in corresponding lbs entry field. If string, blank, or <=0, fields are reset.
-        If values are correct, conversion is executed.
-        If successfull, entry fields buttons are set to state = 'disabled'.
-        Reset button set to = 'normal'
+        '''Checks input in corresponding pounds entry field. 
+        If unable to convert to float i.e. Str, blank, or value <= 0, fields are reset.
+        If values are correct, conversion is executed & all 3 weight values are obtained.
+        Entry fields buttons are set to state = 'disabled'.
+        Reset button set to = 'normal' and self.weight_dict is updated.
         '''
         user_input = self.entry_pounds.get()
         try:
             pounds_weight = float(user_input)
-        except (ValueError, TypeError):
-            self.label_weight.configure(text="Non-zero numbers only and/or click matching Convert button.")
-            self.entry_stones.delete(0, END)
-            self.entry_kilograms.delete(0, END)
-            self.entry_pounds.delete(0, END)
+        except ValueError:
+            self.clear_weight()
+            self.label_weight.configure(
+                text="Non-zero numbers only and/or click matching Convert button.")
             self.label_display.configure(text="")
         else:
             pounds_weight = float(user_input)
-            if pounds_weight <= 0:
-                self.label_weight.configure(text="")
-                self.label_weight.configure(text="Oops! Value must be > 0...")
+            if pounds_weight == 0.00 or pounds_weight < 0.00:
+                # print('Entry is <= 0.00')
                 self.clear_weight()
+                self.label_weight.configure(
+                    text="Entry must be > 0. Re-input value and convert again.")
                 self.label_display.configure(text="")
-            else:
+            else:   # pounds_weight must be > 0.00
                 # pounds
                 self.entry_pounds.delete(0, END)
                 self.entry_pounds.insert(0, '%.2f' % (pounds_weight))
@@ -106,78 +112,93 @@ class Calculations:
                 self.button_stones.configure(state=DISABLED)
                 # kg
                 self.entry_kilograms.delete(0, END)
-                self.entry_kilograms.insert(0, '%.2f' % (self.pounds_to_kilograms(pounds_weight)))
+                self.entry_kilograms.insert(
+                    0, '%.2f' % (self.pounds_to_kilograms(pounds_weight))
+                )
                 self.entry_kilograms.configure(state=DISABLED)
                 self.button_kilograms.configure(state=DISABLED)
+                # enable reset button for weight
                 self.button_clear_weight.configure(state=NORMAL)
-                self.label_weight.configure(text="Weight locked. Click 'Reset' to change or click 'Calculate BMI'.")
+                self.label_weight.configure(
+                    text='''Weight locked. Click 'Reset' to change values. Or ensure that height is converted then click 'Calculate BMI'.'''
+                )
                 self.label_display.configure(text="")
                 # update self.weight_dict
                 self.update_weight_dict()
 
     def kilograms_convert(self):  # 3
-        '''Checks input in corresponding kg entry field. If string, blank, or <=0, fields are reset.
-        If values are correct, conversion is executed.
-        If successfull, entry fields buttons are set to state = 'disabled'.
-        Reset button set to = 'normal'
+        '''Checks input in corresponding kilograms entry field. 
+        If unable to convert to float i.e. Str, blank, or value <= 0, fields are reset.
+        If values are correct, conversion is executed & all 3 weight values are obtained.
+        Entry fields buttons are set to state = 'disabled'.
+        Reset button set to = 'normal' and self.weight_dict is updated.
         '''
         user_input = self.entry_kilograms.get()
         try:
             kilograms_weight = float(user_input)
-        except (ValueError, TypeError):
-            self.label_weight.configure(text="Non-zero numbers only and/or click matching Convert button.")
-            self.entry_stones.delete(0, END)
-            self.entry_pounds.delete(0, END)
-            self.entry_kilograms.delete(0, END)
-            self.label_display.configure(text="")
-        if kilograms_weight <= 0:
-            self.label_weight.configure(text="Oops! Value must be > 0...")
+        except ValueError:
             self.clear_weight()
+            self.label_weight.configure(
+                text="Non-zero numbers only and/or click matching Convert button.")
             self.label_display.configure(text="")
         else:
-            # kg
-            self.entry_kilograms.delete(0, END)
-            self.entry_kilograms.insert(0, '%.2f' % (kilograms_weight))
-            self.entry_kilograms.configure(state=DISABLED)
-            self.button_kilograms.configure(state=DISABLED)
-            # stones
-            self.entry_stones.delete(0, END)
-            self.entry_stones.insert(0, '%.2f' % (self.pounds_to_stones(self.kilograms_to_pounds(kilograms_weight))))
-            self.entry_stones.configure(state=DISABLED)
-            self.button_stones.configure(state=DISABLED)
-            # pounds
-            self.entry_pounds.delete(0, END)
-            self.entry_pounds.insert(0, '%.2f' % (self.kilograms_to_pounds(kilograms_weight)))
-            self.entry_pounds.configure(state=DISABLED)
-            self.button_pounds.configure(state=DISABLED)
-            self.button_clear_weight.configure(state=NORMAL)
-            self.label_weight.configure(text="Weight locked. Click 'Reset' to change or click 'Calculate BMI'.")
-            self.label_display.configure(text="")
-            # update self.weight_dict
-            self.update_weight_dict()
+            kilograms_weight = float(user_input)
+            if kilograms_weight == 0.00 or kilograms_weight < 0.00:
+                # print('Entry is <= 0.00')
+                self.clear_weight()
+                self.label_weight.configure(
+                    text="Entry must be > 0. Re-input value and convert again.")
+                self.label_display.configure(text="")
+            else:
+                # kg
+                self.entry_kilograms.delete(0, END)
+                self.entry_kilograms.insert(0, '%.2f' % (kilograms_weight))
+                self.entry_kilograms.configure(state=DISABLED)
+                self.button_kilograms.configure(state=DISABLED)
+                # stones
+                self.entry_stones.delete(0, END)
+                self.entry_stones.insert(
+                    0, '%.2f' % (self.pounds_to_stones(self.kilograms_to_pounds(kilograms_weight)))
+                )
+                self.entry_stones.configure(state=DISABLED)
+                self.button_stones.configure(state=DISABLED)
+                # pounds
+                self.entry_pounds.delete(0, END)
+                self.entry_pounds.insert(0, '%.2f' % (self.kilograms_to_pounds(kilograms_weight)))
+                self.entry_pounds.configure(state=DISABLED)
+                self.button_pounds.configure(state=DISABLED)
+                self.button_clear_weight.configure(state=NORMAL)
+                self.label_weight.configure(
+                    text='''Weight locked. Click 'Reset' to change values. Or ensure that height is converted then click 'Calculate BMI'.'''
+                )
+                self.label_display.configure(text="")
+                # update self.weight_dict
+                self.update_weight_dict()
 
     def feet_convert(self):  # 4
-        '''Checks input in corresponding feet entry field. If string, blank, or <=0, fields are reset.
-        If values are correct, conversion is executed.
-        If successfull, entry fields buttons are set to state = 'disabled'.
-        Reset button set to = 'normal'
+        '''Checks input in corresponding feet entry field. 
+        If unable to convert to float i.e. Str, blank, or value <= 0, fields are reset.
+        If values are correct, conversion is executed & all 3 height values are obtained.
+        Entry fields buttons are set to state = 'disabled'.
+        Reset button set to = 'normal' and self.height_dict is updated.
         '''
         user_input = self.entry_feet.get()
         try:
             feet_height = float(user_input)
-        except (ValueError, TypeError):
-            self.label_height.configure(text="Non-zero numbers only and/or click matching Convert button.")
-            self.entry_feet.delete(0, END)
-            self.entry_inches.delete(0, END)
-            self.entry_cm.delete(0, END)
+        except ValueError:
+            self.clear_height()
+            self.label_height.configure(
+                text="Non-zero numbers only and/or click matching Convert button.")
             self.label_display.configure(text="")
         else:
             feet_height = float(user_input)
-            if feet_height <= 0:
-                self.label_height.configure(text="Oops! Value must be > 0...")
+            if feet_height == 0.00 or feet_height < 0.00:
+                # print('Entry is <= 0.00')
                 self.clear_height()
+                self.label_height.configure(
+                    text="Entry must be > 0. Re-input value and convert again.")
                 self.label_display.configure(text="")
-            else:
+            else:   # feet_height must be > 0.00
                 # Ft
                 self.entry_feet.delete(0, END)
                 self.entry_feet.insert(0, '%.2f' % (feet_height))
@@ -190,37 +211,41 @@ class Calculations:
                 self.button_inches.configure(state=DISABLED)
                 # cm
                 self.entry_cm.delete(0, END)
-                self.entry_cm.insert(0, '%.2f' % (self.inches_to_cm(self.feet_to_inches(feet_height))))
+                self.entry_cm.insert(
+                    0, '%.2f' % (self.inches_to_cm(self.feet_to_inches(feet_height)))
+                )
                 self.entry_cm.configure(state=DISABLED)
                 self.button_cm.configure(state=DISABLED)
                 self.button_clear_height.configure(state=NORMAL)
-                self.label_height.configure(text="Height locked. Click 'Reset' to change or click 'Calculate BMI'.")
+                self.label_height.configure(text="Height locked. Click 'Reset' to change values. Or ensure that weight is converted then click 'Calculate BMI'.")
                 self.label_display.configure(text="")
                 # update height_dict
                 self.update_height_dict()
 
     def inches_convert(self):  # 5
-        '''Checks input in corresponding inches entry field. If string, blank, or <=0, fields are reset.
-        If values are correct, conversion is executed.
-        If successfull, entry fields buttons are set to state = 'disabled'.
-        Reset button set to = 'normal'
+        '''Checks input in corresponding inches entry field. 
+        If unable to convert to float i.e. Str, blank, or value <= 0, fields are reset.
+        If values are correct, conversion is executed & all 3 height values are obtained.
+        Entry fields buttons are set to state = 'disabled'.
+        Reset button set to = 'normal' and self.height_dict is updated.
         '''
         user_input = self.entry_inches.get()
         try:
             inches_height = float(user_input)
-        except (ValueError, TypeError):
-            self.label_height.configure(text="Non-zero numbers only and/or click matching Convert button.")
-            self.entry_feet.delete(0, END)
-            self.entry_inches.delete(0, END)
-            self.entry_cm.delete(0, END)
+        except ValueError:
+            self.clear_height()
+            self.label_height.configure(
+                text="Non-zero numbers only and/or click matching Convert button.")
             self.label_display.configure(text="")
         else:
             inches_height = float(user_input)
-            if inches_height <= 0:
-                self.label_height.configure(text="Oops! Value must be > 0...")
+            if inches_height == 0.00 or inches_height < 0.00:
+                # print('Entry is <= 0.00')
                 self.clear_height()
+                self.label_height.configure(
+                    text="Entry must be > 0. Re-input value and convert again.")
                 self.label_display.configure(text="")
-            else:
+            else:   # inches_height must be > 0.00
                 # inch
                 self.entry_inches.delete(0, END)
                 self.entry_inches.insert(0, '%.2f' % (inches_height))
@@ -237,33 +262,35 @@ class Calculations:
                 self.entry_cm.configure(state=DISABLED)
                 self.button_cm.configure(state=DISABLED)
                 self.button_clear_height.configure(state=NORMAL)
-                self.label_height.configure(text="Height locked. Click 'Reset' to change or click 'Calculate BMI'.")
+                self.label_height.configure(text="Height locked. Click 'Reset' to change values. Or ensure that weight is converted then click 'Calculate BMI'.")
                 self.label_display.configure(text="")
                 # update height_dict
                 self.update_height_dict()
 
     def cm_convert(self):  # 6
-        '''Checks input in corresponding cm entry field. If string, blank, or <=0, fields are reset.
-        If values are correct, conversion is executed.
-        If successfull, entry fields buttons are set to state = 'disabled'.
-        Reset button set to = 'normal'
+        '''Checks input in corresponding centimeters entry field. 
+        If unable to convert to float i.e. Str, blank, or value <= 0, fields are reset.
+        If values are correct, conversion is executed & all 3 height values are obtained.
+        Entry fields buttons are set to state = 'disabled'.
+        Reset button set to = 'normal' and self.height_dict is updated.
         '''
         user_input = self.entry_cm.get()
         try:
             cm_height = float(user_input)
-        except (ValueError, TypeError):
-            self.label_height.configure(text="Non-zero numbers only and/or click matching Convert button.")
-            self.entry_feet.delete(0, END)
-            self.entry_inches.delete(0, END)
-            self.entry_cm.delete(0, END)
+        except ValueError:
+            self.clear_height()
+            self.label_height.configure(
+                text="Non-zero numbers only and/or click matching Convert button.")
             self.label_display.configure(text="")
         else:
             cm_height = float(user_input)
-            if cm_height <= 0:
-                self.label_height.configure(text="Oops! Value must be > 0...")
+            if cm_height == 0.00 or cm_height < 0.00:
+                # print('Entry is <= 0.00')
                 self.clear_height()
+                self.label_height.configure(
+                    text="Entry must be > 0. Re-input value and convert again.")
                 self.label_display.configure(text="")
-            else:
+            else:   # cm_height must be > 0.00
                 # cm
                 self.entry_cm.delete(0, END)
                 self.entry_cm.insert(0, '%.2f' % (cm_height))
@@ -271,7 +298,9 @@ class Calculations:
                 self.button_cm.configure(state=DISABLED)
                 # ft
                 self.entry_feet.delete(0, END)
-                self.entry_feet.insert(0, '%.2f' % (self.inches_to_feet(self.cm_to_inches(cm_height))))
+                self.entry_feet.insert(
+                    0, '%.2f' % (self.inches_to_feet(self.cm_to_inches(cm_height)))
+                )
                 self.entry_feet.configure(state=DISABLED)
                 self.button_feet.configure(state=DISABLED)
                 # inch
@@ -280,20 +309,20 @@ class Calculations:
                 self.entry_inches.configure(state=DISABLED)
                 self.button_inches.configure(state=DISABLED)
                 self.button_clear_height.configure(state=NORMAL)
-                self.label_height.configure(text="Height locked. Click 'Reset' to change or click 'Calculate BMI'.")
+                self.label_height.configure(text="Height locked. Click 'Reset' to change values. Or ensure that weight is converted then click 'Calculate BMI'.")
                 self.label_display.configure(text="")
                 # update height_dict
                 self.update_height_dict()
 
     def calculate_bmi(self):
-        '''Gets value from metric kg & cm. def run_bmi has cleared and
-        ensured the format can be converted to float.
-        Makes sure all conversion results are floats, then calculates actual BMI.
+        '''Only executed when def run_bmi has ensured that field entries 
+        can be converted to float and non-zero.
+        Gets value from metric kg & cm, then calculates actual BMI.
         '''
         cm, kg = float(self.height_dict['Centimeters']), float(self.weight_dict['Kilograms'])
         try:
             bmi = kg / ((cm / 100) ** 2)
-        except (ZeroDivisionError):
+        except ZeroDivisionError:
             self.label_display.configure(text="Oops! How did that zero value get in?")
             self.clear_weight()
             self.clear_height()
@@ -359,7 +388,10 @@ class Interface(Calculations):
         self.bmi_data = {}
         self.file_name = ''
         # === FRAMES === #
-        self.name_frame = ttk.LabelFrame(root, text='Enter your details:')
+        self.name_frame = ttk.LabelFrame(
+            root, 
+            text='Enter your details (name, weight, & height), click convert & Calculate BMI.'
+        )
         self.name_frame.pack(fill=BOTH, padx=2, pady=2)
         self.weight_frame = ttk.LabelFrame(root, text='Weight')
         self.weight_frame.pack(fill=BOTH, padx=2, pady=2)
@@ -382,11 +414,11 @@ class Interface(Calculations):
         self.label_kilograms = Label(self.weight_frame, text='Kilograms:')
         self.label_kilograms.grid(row=0, column=4, padx=5, pady=5, sticky=E)
         # weight validation display
-        self.label_weight = Label(self.weight_frame)
+        self.label_weight = Label(self.weight_frame, width=50, wraplength=450, justify=LEFT)
         self.label_weight.grid(row=2, column=0, columnspan=5, padx=5, pady=10, sticky=W + E + N + S)
         self.label_weight.configure(text='Enter your weight in one of the boxes & convert')
-        # weight validation display
-        self.label_height = Label(self.height_frame)
+        # height validation display
+        self.label_height = Label(self.height_frame, width=50, wraplength=450, justify=LEFT)
         self.label_height.grid(row=2, column=0, columnspan=5, padx=5, pady=10, sticky=W + E + N + S)
         self.label_height.configure(text='Enter your height in one of the boxes & convert')
         # height scale names
@@ -400,10 +432,10 @@ class Interface(Calculations):
         self.label_cm = Label(self.height_frame, text='Centimeters:')
         self.label_cm.grid(row=0, column=4, padx=5, pady=5, sticky=E)
         # BMI analysis display
-        self.label_bmi = Label(self.bmi_frame, width=60, bg='#99e6e6' ,wraplength=450, justify=LEFT)
+        self.label_bmi = Label(self.bmi_frame, width=65, bg='#99e6e6', wraplength=450, justify=LEFT)
         self.label_bmi.grid(row=0, column=0, columnspan=9, padx=10, pady=10, sticky=W)
         # Error messages to user
-        self.label_display = Label(self.bmi_frame, bg='#ffda8f', width=60, wraplength=450, justify=LEFT)
+        self.label_display = Label(self.bmi_frame, bg='#ffda8f', width=65, wraplength=450, justify=LEFT)
         self.label_display.grid(row=1, column=0, columnspan=9, padx=10, pady=10, sticky=W)
         # === ENTRY BOXES === #
         # name box
@@ -445,29 +477,45 @@ class Interface(Calculations):
         self.entry_kilograms.grid(row=0, column=5, padx=5, pady=5, sticky=W)
         # === BUTTONS === #
         # stones
-        self.button_stones = ttk.Button(self.weight_frame, text='Convert Stones >>', command=self.stones_convert)
+        self.button_stones = ttk.Button(
+            self.weight_frame, text='Convert Stones >>', command=self.stones_convert
+        )
         self.button_stones.grid(row=1, column=0, columnspan=2, padx=5, pady=5, sticky=W)
         # pounds
-        self.button_pounds = ttk.Button(self.weight_frame, text='< Convert Pounds >', command=self.pounds_convert)
+        self.button_pounds = ttk.Button(
+            self.weight_frame, text='< Convert Pounds >', command=self.pounds_convert
+        )
         self.button_pounds.grid(row=1, column=2, columnspan=2, padx=5, pady=5)
         # kilograms
-        self.button_kilograms = ttk.Button(self.weight_frame, text='<< Convert Kilograms', command=self.kilograms_convert)
+        self.button_kilograms = ttk.Button(
+            self.weight_frame, text='<< Convert Kilograms', command=self.kilograms_convert
+        )
         self.button_kilograms.grid(row=1, column=4, columnspan=2, padx=5, pady=5, sticky=E)
         # buttons
         # feet
-        self.button_feet = ttk.Button(self.height_frame, text='Convert Feet >>', command=self.feet_convert)
+        self.button_feet = ttk.Button(
+            self.height_frame, text='Convert Feet >>', command=self.feet_convert
+        )
         self.button_feet.grid(row=1, column=0, columnspan=2, padx=5, pady=5, sticky=W)
         # inches
-        self.button_inches = ttk.Button(self.height_frame, text='< Convert Inches >', command=self.inches_convert)
+        self.button_inches = ttk.Button(
+            self.height_frame, text='< Convert Inches >', command=self.inches_convert
+        )
         self.button_inches.grid(row=1, column=2, columnspan=2, padx=5, pady=5)
         # centimeters
-        self.button_cm = ttk.Button(self.height_frame, text='<< Convert Centimeters ', command=self.cm_convert)
+        self.button_cm = ttk.Button(
+            self.height_frame, text='<< Convert Centimeters ', command=self.cm_convert
+        )
         self.button_cm.grid(row=1, column=4, columnspan=2, padx=4, pady=5, sticky=E)
         # clear weight
-        self.button_clear_weight = ttk.Button(self.weight_frame, text='Reset', state=DISABLED, command=self.clear_weight)
+        self.button_clear_weight = ttk.Button(
+            self.weight_frame, text='Reset Weight', state=DISABLED, command=self.clear_weight
+        )
         self.button_clear_weight.grid(row=2, column=5, columnspan=1, padx=5, pady=5, sticky=E)
         # clear height
-        self.button_clear_height = ttk.Button(self.height_frame, text='Reset', state=DISABLED, command=self.clear_height)
+        self.button_clear_height = ttk.Button(
+            self.height_frame, text='Reset Height', state=DISABLED, command=self.clear_height
+        )
         self.button_clear_height.grid(row=2, column=5, columnspan=1, padx=5, pady=5, sticky=E)
         # bmi calculate
         self.button_calc_bmi = ttk.Button(self.bmi_frame, text='Calculate BMI', command=self.run_bmi)
@@ -479,7 +527,9 @@ class Interface(Calculations):
         self.button_save = ttk.Button(self.bmi_frame, text='Save', state=DISABLED, command=self.save)
         self.button_save.grid(row=2, column=4, columnspan=1, padx=5, pady=10, sticky=W + E + N + S)
         # IO buttons - save as
-        self.button_save_as = ttk.Button(self.bmi_frame, text='Save As', state=DISABLED, command=self.save_as)
+        self.button_save_as = ttk.Button(
+            self.bmi_frame, text='Save As', state=DISABLED, command=self.save_as
+        )
         self.button_save_as.grid(row=2, column=6, columnspan=1, padx=5, pady=10, sticky=W + E + N + S)
 
     def clear_bmi_display(self):
@@ -488,7 +538,7 @@ class Interface(Calculations):
         self.label_display.configure(text='')
 
     def clear_weight(self):
-        '''Enables all weight entry fields and clears current input values.
+        '''Enables all weight entry fields. Clears current entry boxes and clears self.weight_dict
         After successful reset of entry fields, button is disabled.
         Becomes enabled after convert is triggered and is successful.
         '''
@@ -515,6 +565,10 @@ class Interface(Calculations):
         self.button_save_as.configure(state=DISABLED)
 
     def clear_height(self):
+        '''Enables all weight entry fields. Clears current entry boxes and clears self.weight_dict
+        After successful reset of entry fields, button is disabled.
+        Becomes enabled after convert is triggered and is successful.
+        '''        
         self.height_dict.clear()
         # stones
         self.button_feet.configure(state=NORMAL)
@@ -540,6 +594,8 @@ class Interface(Calculations):
     def reset(self):
         '''Enables all weight & height & name entry fields and clears current input values.
         '''
+        # reset window title
+        root.title('BMI Calculator')
         # clear weight and height
         self.clear_weight()
         self.clear_height()
@@ -599,7 +655,7 @@ class Interface(Calculations):
             self.label_display.configure(text="Oops! You forgot to convert weight.")
         elif not self.height_dict and self.weight_dict:
             self.label_display.configure(text="Oops! You forgot to convert height.")
-        else:   # try to calculate BMI
+        else:   # calculate BMI
             self.entry_name.configure(state=DISABLED)   # stop furthr changes to name
             user = self.name_dict['Name']
             bmi = float(self.calculate_bmi())
@@ -614,13 +670,15 @@ class Interface(Calculations):
             self.button_calc_bmi.configure(state=DISABLED)
             self.button_save.configure(state=NORMAL)
             self.button_save_as.configure(state=NORMAL)
+            # user info update
+            self.label_display.configure(text="Click Restart for a new session / change name. Or click Save / Save As to output results in a .csv file.")
 
     def get_csv_name(self):
         replacers = ['\\', '/', ':']
         f = str(self.file_name)
         for r in replacers:
-            f = f.replace(r, ' ')
-            chunks = f.split(' ')
+            f = f.replace(r, '|')
+            chunks = f.split('|')
         name = chunks[len(chunks) - 1]
         return name
 
@@ -636,7 +694,7 @@ class Interface(Calculations):
         try:
             self.write_file()
         except FileNotFoundError:
-            self.label_display.configure(text='Please input a file name.')
+            self.label_display.configure(text='Please input a file name & try again to save.')
         else:
             csv_name = self.get_csv_name()
             root.title(f'BMI Calculator - {csv_name}')
@@ -644,7 +702,7 @@ class Interface(Calculations):
 
     def save(self):
         '''Becomes clickable only when BMI is successfully calculated'''
-        print(self.file_name)
+        # print(self.file_name)
         self.label_display.configure(text='')
         if not self.file_name:
             self.save_as()
