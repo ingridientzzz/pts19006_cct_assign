@@ -1,0 +1,2 @@
+Deliberately did not use fd message boxes for cleaner interface.
+Messages to user are displayed via labels inside frames.
