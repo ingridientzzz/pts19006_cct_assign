@@ -432,11 +432,15 @@ class Interface(Calculations):
         self.label_cm = Label(self.height_frame, text='Centimeters:')
         self.label_cm.grid(row=0, column=4, padx=5, pady=5, sticky=E)
         # BMI analysis display
-        self.label_bmi = Label(self.bmi_frame, width=65, bg='#99e6e6', wraplength=450, justify=LEFT)
-        self.label_bmi.grid(row=0, column=0, columnspan=9, padx=10, pady=10, sticky=W)
+        self.label_bmi_name = Label(self.bmi_frame, text='BMI Result:')
+        self.label_bmi_name.grid(row=0, column=0, padx=5, pady=5, sticky=W)
+        self.label_bmi = Label(self.bmi_frame, width=50, bg='#99e6e6', wraplength=440, justify=LEFT)
+        self.label_bmi.grid(row=0, column=1, columnspan=9, padx=10, pady=10, sticky=W)
         # Error messages to user
-        self.label_display = Label(self.bmi_frame, bg='#ffda8f', width=65, wraplength=450, justify=LEFT)
-        self.label_display.grid(row=1, column=0, columnspan=9, padx=10, pady=10, sticky=W)
+        self.label_display_name = Label(self.bmi_frame, text='Run status:')
+        self.label_display_name.grid(row=1, column=0, padx=5, pady=5, sticky=W)
+        self.label_display = Label(self.bmi_frame, bg='#ffda8f', width=50, wraplength=440, justify=LEFT)
+        self.label_display.grid(row=1, column=1, columnspan=9, padx=10, pady=10, sticky=W)
         # === ENTRY BOXES === #
         # name box
         self.text_name = StringVar()
