@@ -414,11 +414,11 @@ class Interface(Calculations):
         self.label_kilograms = Label(self.weight_frame, text='Kilograms:')
         self.label_kilograms.grid(row=0, column=4, padx=5, pady=5, sticky=E)
         # weight validation display
-        self.label_weight = Label(self.weight_frame, width=50, wraplength=450, justify=LEFT)
+        self.label_weight = Label(self.weight_frame, width=50, wraplength=400, justify=LEFT)
         self.label_weight.grid(row=2, column=0, columnspan=5, padx=5, pady=10, sticky=W + E + N + S)
         self.label_weight.configure(text='Enter your weight in one of the boxes & convert')
         # height validation display
-        self.label_height = Label(self.height_frame, width=50, wraplength=450, justify=LEFT)
+        self.label_height = Label(self.height_frame, width=50, wraplength=400, justify=LEFT)
         self.label_height.grid(row=2, column=0, columnspan=5, padx=5, pady=10, sticky=W + E + N + S)
         self.label_height.configure(text='Enter your height in one of the boxes & convert')
         # height scale names
