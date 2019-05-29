@@ -4,7 +4,7 @@
 # pts19006
 from tkinter import *
 from tkinter import ttk
-import tkinter.filedialog as fd
+# import tkinter.filedialog as fd
 import string
 import csv
 
