@@ -523,7 +523,7 @@ class Interface(Calculations):
         self.button_clear_height.grid(row=2, column=5, columnspan=1, padx=5, pady=5, sticky=E)
         # bmi calculate
         self.button_calc_bmi = ttk.Button(self.bmi_frame, text='Calculate BMI', command=self.run_bmi)
-        self.button_calc_bmi.grid(row=2, column=0, columnspan=1, padx=5, pady=10, sticky=W + E + N + S)
+        self.button_calc_bmi.grid(row=2, column=0, columnspan=2, padx=5, pady=10, sticky=W + E + N + S)
         # clear data
         self.button_restart = ttk.Button(self.bmi_frame, text='Restart', command=self.reset)
         self.button_restart.grid(row=2, column=2, columnspan=1, padx=5, pady=10, sticky=W + E + N + S)
