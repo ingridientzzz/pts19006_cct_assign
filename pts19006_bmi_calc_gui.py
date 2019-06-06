@@ -1,7 +1,5 @@
 # Ingrid Rose Marquez
-# ingridrose.marquez@gmail.com
-# +353 83 310 4348
-# pts19006
+
 from tkinter import *
 from tkinter import ttk
 import tkinter.filedialog as fd
